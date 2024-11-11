@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.dao.HouseDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.learn.entity.HouseEntity" id="houseMap">
+        <result property="id" column="id"/>
+        <result property="xiaoqu" column="xiaoqu"/>
+        <result property="area" column="area"/>
+        <result property="price" column="price"/>
+        <result property="huxing" column="huxing"/>
+        <result property="img" column="img"/>
+        <result property="lianxi" column="lianxi"/>
+        <result property="phone" column="phone"/>
+        <result property="state" column="state"/>
+        <result property="saler" column="saler"/>
+        <result property="buyer" column="buyer"/>
+        <result property="time" column="time"/>
+        <result property="gmttime" column="gmtTime"/>
+    </resultMap>
+
+    <select id="queryObject" resultType="com.learn.entity.HouseEntity">
+		select * from house where id = #{value}
+	</select>
+
+    <select id="queryList" resultType="com.learn.entity.HouseEntity">
+        select * from house where 1=1
+        <if test="xiaoqu != null and xiaoqu != ''">
+            and xiaoqu like '%${xiaoqu}%'
+        </if>
+        <if test="buyer != null and buyer != ''">
+            and buyer =#{buyer}
+        </if>
+        <if test="saler != null and saler != ''">
+            and saler =#{saler}
+        </if>
+        <if test="state != null and state != ''">
+            and state =#{state}
+        </if>
+        <if test="time != null and time != ''">
+            and time like '%${time}%'
+        </if>
+
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from house where 1=1
+        <if test="xiaoqu != null and xiaoqu != ''">
+            and xiaoqu like '%${xiaoqu}%'
+        </if>
+        <if test="buyer != null and buyer != ''">
+            and buyer =#{buyer}
+        </if>
+        <if test="saler != null and saler != ''">
+            and saler =#{saler}
+        </if>
+        <if test="state != null and state != ''">
+            and state =#{state}
+        </if>
+        <if test="time != null and time != ''">
+            and time like '%${time}%'
+        </if>
+
+    </select>
+
+    <insert id="save" parameterType="com.learn.entity.HouseEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into house
+		(
+			`xiaoqu`, 
+			`area`, 
+			`price`, 
+			`huxing`, 
+			`img`, 
+			`lianxi`, 
+			`phone`, 
+			`state`, 
+			`saler`, 
+			`buyer`, 
+			`time`, 
+			`gmtTime`
+		)
+		values
+		(
+			#{xiaoqu}, 
+			#{area}, 
+			#{price}, 
+			#{huxing}, 
+			#{img}, 
+			#{lianxi}, 
+			#{phone}, 
+			#{state}, 
+			#{saler}, 
+			#{buyer}, 
+			#{time}, 
+			#{gmttime}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.learn.entity.HouseEntity">
+        update house
+        <set>
+            <if test="xiaoqu != null">`xiaoqu` = #{xiaoqu},</if>
+            <if test="area != null">`area` = #{area},</if>
+            <if test="price != null">`price` = #{price},</if>
+            <if test="huxing != null">`huxing` = #{huxing},</if>
+            <if test="img != null">`img` = #{img},</if>
+            <if test="lianxi != null">`lianxi` = #{lianxi},</if>
+            <if test="phone != null">`phone` = #{phone},</if>
+            <if test="state != null">`state` = #{state},</if>
+            <if test="saler != null">`saler` = #{saler},</if>
+            <if test="buyer != null">`buyer` = #{buyer},</if>
+            <if test="time != null">`time` = #{time},</if>
+            <if test="gmttime != null">`gmtTime` = #{gmttime}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from house where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from house where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

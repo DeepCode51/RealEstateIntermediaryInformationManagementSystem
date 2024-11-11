@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>房产中介信息管理系统</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="statics/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/css/font-awesome.min.css">
+    <link rel="stylesheet" href="statics/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Record a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="statics/css/all-skins.min.css">
+    <link rel="stylesheet" href="statics/css/main.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        html{
+            background: url("statics/bg.jpg") top center no-repeat;
+			background-size:100%;
+        }
+        html, body, * {
+            font-family: "Microsoft YaHei";
+        }
+        .login{
+            background: #999;
+        }
+        .login .content {
+            margin: auto;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            background-color: #fafdfd;
+            width: 450px;
+            border:none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 15px 5px rgba(0,0,0,0.15);
+            -moz-box-shadow: 0 0 15px 5px rgba(0,0,0,0.15);
+            box-shadow: 0 0 15px 5px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .login .content .title{
+            height: 60px;
+            line-height: 60px;
+            background-color: #3c8dbc;
+            color:#fff;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .login .content .login-form,
+        .login .content .forget-form {
+            margin: 0px auto;
+            width: 330px;
+            padding: 24px 0;
+            color: #666666;
+            font-size: 16px;
+        }
+
+        .login .content .login-form .form-control{
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+
+        .login .content .form-control {
+            background-color: #fff;
+        }
+
+        .login .content .forget-form {
+            display: none;
+        }
+
+        .login .content .register-form {
+            display: none;
+        }
+
+        .login .content .form-title {
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        .login .content .form-actions {
+            background-color: transparent;
+            clear: both;
+            border: 0;
+            padding: 0 0 25px 30px;
+        }
+
+        .login .content .form-actions .checkbox {
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .login .content .forget-form .form-actions {
+            border: 0;
+            margin-bottom: 0;
+            padding-bottom: 20px;
+        }
+
+        .login .content .register-form .form-actions {
+            border: 0;
+            margin-bottom: 0;
+            padding-bottom: 0px;
+        }
+
+        .login .content .form-actions .checkbox {
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .login .content .form-actions .btn {
+            margin-top: 1px;
+        }
+
+        .login .content .forget-password {
+            margin-top: 25px;
+        }
+
+        .login .content .create-account {
+            border-top: 1px dotted #eee;
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+
+        .login .content .create-account a {
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* select2 dropdowns */
+        .login .content .select2-container i {
+            display: inline-block;
+            position: relative;
+            color: #ccc;
+            z-index: 1;
+            top: 1px;
+            margin: 4px 4px 0px -1px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .login .content .has-error .select2-container i {
+            color: #b94a48;
+        }
+
+        .login .content .select2-container a span {
+            font-size: 13px;
+        }
+
+        .login .content .select2-container a span img {
+            margin-left: 4px;
+        }
+
+        /* footer copyright */
+        .login .copyright {
+            text-align: center;
+            margin: 0 auto;
+            padding: 10px;
+            color: #eee;
+            font-size: 13px;
+        }
+
+
+        .logo b {
+            font: normal small-caps normal 24px/1em "Arial Narrow";
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="login clearfix">
+<div class="content"  id="rrapp" style="padding: 0">
+    <div class="title">房产中介信息管理系统</div>
+    <form class="login-form" method="post" onsubmit="return false">
+        <div class="alert alert-danger " :class="{hide : !error}">
+            <button class="close" data-close="alert"></button>
+            <span>{{errorMsg}}</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" autofocus placeholder="请输入登录账号"
+                   v-model="username"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" placeholder="请输入密码"
+                   v-model="password"/>
+        </div>
+        <div class="form-group  ">
+            <input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
+        </div>
+        <div class="form-group has-feedback">
+            <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
+            &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode">点击刷新</a>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary" @click="login">
+                登陆 <i class="icon icon-arrow-right"></i>
+            </button>
+            <!--<a class="btn btn-link" href="reg.html" style="position: absolute;right: 20px;">立即注册</a>-->
+        </div>
+    </form>
+</div>
+
+<!-- /.login-box -->
+<script src="statics/libs/jquery.min.js"></script>
+<script src="statics/libs/vue.min.js"></script>
+<script src="statics/libs/bootstrap.min.js"></script>
+<script src="statics/libs/jquery.slimscroll.min.js"></script>
+<script src="statics/libs/fastclick.min.js"></script>
+<script src="statics/libs/app.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#rrapp',
+        data:{
+            username: 'admin',
+            password: '123123',
+            captcha: null,
+            error: false,
+            errorMsg: null,
+            src: 'captcha.jpg'
+        },
+        beforeCreate: function(){
+            if(self != top){
+                top.location.href = self.location.href;
+            }
+        },
+        created: function () {
+        },
+        methods: {
+            refreshCode: function(){
+                this.src = "captcha.jpg?t=" + $.now();
+            },
+            login: function (event) {
+                var data = "username="+this.username+"&password="+this.password+"&captcha="+this.captcha;
+                $.ajax({
+                    type: "POST",
+                    url: "sys/login",
+                    data: data,
+                    dataType: "json",
+                    success: function(result){
+                        if(result.code == 0){//登录成功
+                            parent.location.href ='index.html';
+                        }else{
+                            vm.error = true;
+                            vm.errorMsg = result.msg;
+
+                            vm.refreshCode();
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>
